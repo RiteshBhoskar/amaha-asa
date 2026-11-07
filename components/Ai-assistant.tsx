@@ -167,7 +167,7 @@ export default function AiAssistant() {
                       scale: 0.96,
                       transition: { duration: 0.15 },
                     }}
-                    className="pointer-events-auto relative cursor-pointer whitespace-nowrap rounded-full border border-black/5 bg-white px-4 py-1.5 text-sm text-neutral-900 shadow-lg hover:bg-neutral-50"
+                    className="pointer-events-auto relative cursor-pointer whitespace-nowrap rounded-t-full rounded-bl-full rounded-br-xl border border-black/5 bg-[#C54D56] px-[16px] py-[7px] text-sm text-neutral-900 shadow-lg"
                   >
                     {question}
                   </motion.button>
