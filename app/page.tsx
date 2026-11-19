@@ -1,4 +1,3 @@
-import AiAssistant from "@/components/Ai-assistant";
 import Navbar from "@/components/Navbar";
 
 
@@ -8,7 +7,6 @@ export default function Home() {
       <div className="w-full h-20">
         <Navbar />
       </div>
-      <AiAssistant />
     </main>
   )
 }

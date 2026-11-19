@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f3ecdf;
+  --ink: #1c1612;
+  --saffron: #e25b1a;
+  --moss: #2f4a3c;
+  --card: #fffdf8;
+  --line: #e4d8c6;
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-saffron: var(--saffron);
+  --color-moss: var(--moss);
+  --color-card: var(--card);
+  --color-line: var(--line);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #14110e;
+    --ink: #f6f1e7;
+    --saffron: #f07a3a;
+    --moss: #b7cbb8;
+    --card: #1e1914;
+    --line: #3a322a;
+    --background: var(--paper);
+    --foreground: var(--ink);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(900px 420px at 0% -10%, color-mix(in srgb, var(--saffron) 28%, transparent), transparent 60%),
+    radial-gradient(700px 380px at 100% 0%, color-mix(in srgb, var(--moss) 22%, transparent), transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
