@@ -125,19 +125,35 @@ export default function AiAssistant() {
     }
   }
 
-  function sendMessage(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const sendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const text = input.trim();
-    if (!text) return;
+    if (!input.trim()) return;
 
-    setMessages((previous) => [
-      ...previous,
-      { role: "user", content: text },
+    const question = input.trim();
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: question },
     ]);
 
     setInput("");
-  }
+
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+    });
+
+    const data = await response.json();
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "assistant", content: data.reply },
+    ]);
+  };
 
   return (
     <>
@@ -239,8 +255,7 @@ export default function AiAssistant() {
                   </h2>
 
                   <p className="text-sm leading-6 text-neutral-600">
-                    What would you like to know? Ask me about my projects,
-                    background, or anything else.
+                    How can I help you with your mental health today? You can ask me anything, and I'll assist you.
                   </p>
                 </div>
               )}
@@ -258,11 +273,6 @@ export default function AiAssistant() {
                 </div>
               ))}
 
-              {messages.length > 0 && (
-                <p className="mt-2 text-center text-xs leading-5 text-neutral-400">
-                  Chat interface preview — connect an AI API to enable responses.
-                </p>
-              )}
             </div>
 
             <form

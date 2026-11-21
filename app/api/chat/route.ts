@@ -1,12 +1,23 @@
-"use server"
 
-import { GoogleGenAI } from "@google/genai"
 
-const ai = new GoogleGenAI({})
+export async function POST( request: Request) {
+    try {
+        const body = await request.json();
+        
+        const { question } = body;
+        
+        if (!question || typeof question !== "string") {
+            return new Response("Question is required and must be a string", { status: 400 });
+        }
 
-const interaction = await ai.interactions.create({
-    model: "gemini-3.8-flash",
-    input: ""
-})
+        console.log(`Received question: ${question}`);
 
-console.log(interaction.output_text)
+        return Response.json(
+            { role: "assistant", reply: `You asked: ${question}` },
+        );
+
+    } catch (error) {
+        console.log(error);
+        return new Response("Internal Server Error", { status: 500 });
+    }
+}
