@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Amaha Ai Assistant Demo - Powered by OpenAi",
+  title: "Amaha AI Assistant Demo - Powered by OpenAi",
   description: "Experience the power of AI with Amaha's Ai Assistant Demo, built using Next.js and OpenAI.",
 };
 

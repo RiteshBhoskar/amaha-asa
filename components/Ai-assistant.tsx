@@ -125,35 +125,54 @@ export default function AiAssistant() {
     }
   }
 
-  const sendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
+  async function askAssistant(question: string){
+    const trimmedQuestion = question.trim();
+    if (!trimmedQuestion) return;
 
-    if (!input.trim()) return;
+    try {
+      setMessages((prev) => [
+        ...prev,
+        { role: "user" , content: trimmedQuestion },
+      ])
+      
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          question: trimmedQuestion,
+        })
+      })
 
-    const question = input.trim();
+      const data = await response.json();
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "user", content: question },
-    ]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant" , content: data.reply }
+      ])
 
-    setInput("");
+    } catch(e) {
+      console.log(e);
+    }
+  }
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ question }),
-    });
 
-    const data = await response.json();
+  function sendMessage(e: FormEvent) {
+  e.preventDefault();
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "assistant", content: data.reply },
-    ]);
-  };
+  const question = input.trim();
+
+  if (!question) return;
+
+  setInput("");
+  askAssistant(question);
+ }
+
+function handleMultipleOnclicks(question: string) {
+  openChat();
+  askAssistant(question);
+}
 
   return (
     <>
@@ -171,7 +190,7 @@ export default function AiAssistant() {
                     key={question}
                     data-suggestion
                     type="button"
-                    onClick={() => openChat(question)}
+                    onClick={() => handleMultipleOnclicks(question)}
                     style={{
                       opacity: 0,
                       x: index === 0 ? 28 : 0,
